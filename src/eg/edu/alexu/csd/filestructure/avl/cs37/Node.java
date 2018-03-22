@@ -3,40 +3,61 @@ package eg.edu.alexu.csd.filestructure.avl.cs37;
 import eg.edu.alexu.csd.filestructure.avl.INode;
 
 public class Node<T extends Comparable<T>> implements INode<T> {
+	private T value ;
 	private INode<T> leftChild;
 	private INode<T> rightChild;
 	private INode<T> parent;
-	private T value ;
 	private int rightHeight;
 	private int leftHeight;
 
 	public Node(INode<T>parent ,T value){
-		this.leftHeight=0;
-		this.rightHeight=0;
+		this.leftHeight=-1;
+		this.rightHeight=-1;
 		this.value = value;
 		this.leftChild=null;
 		this.rightChild=null;
 		this.parent = parent;
 	}
 	public Node(){
-		this.leftHeight=0;
-		this.rightHeight=0;		this.value = null;
+		this.leftHeight=-1;
+		this.rightHeight=-1;		
+		this.value = null;
 		this.leftChild=null;
 		this.rightChild=null;
 		this.parent=null;
 		
 	}
-	public Node(INode<T>parent ,T value,INode<T> left,INode<T> right){
-		this.leftHeight=0;
-		this.rightHeight=0;
+	public Node(INode<T>parent ,T value,Node<T> left,Node<T> right){
+		this.leftHeight=left.height();
+		this.rightHeight=right.height();
 		this.value = value;
 		this.leftChild=left;
 		this.rightChild=right;
 		this.parent=parent;
 		
 	}
+	public void updateHeight(){
+		if(rightChild!=null){
+			rightHeight = ((Node<T>)rightChild).height();
+		}else{
+			rightHeight=-1;
+		}
+		
+		
+		if(leftChild != null){
+			leftHeight = ((Node<T>)leftChild).height();
+		}else{
+			leftHeight=-1;
+		}
+	}
 	public int height(){
-		return this.leftHeight > this.rightHeight ? this.leftHeight : this.rightHeight; 
+		return (this.leftHeight > this.rightHeight ? (this.leftHeight+1) : (this.rightHeight+1)); 
+	}
+	public int LeftHeight(){
+		return this.leftHeight ;
+	}
+	public int rightHeight(){
+		return this.rightHeight ;
 	}
 	public void setLeftChild(INode<T> leftChild){
 		this.leftChild = leftChild;
